@@ -1,0 +1,411 @@
+/* Full Service Section */
+.fs-section {
+  position: relative;
+  padding: clamp(3rem, 6vw, 6rem) 1rem;
+  background-color: #05060a; /* Fallback color */
+  background-image: url('/newback.jpg');
+  color: #fff;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* Optimize background image loading */
+.fs-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .fs-section {
+    padding: clamp(3rem, 6vw, 6rem) 1.5rem;
+  }
+}
+
+/* Background fallback for when image doesn't load */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .fs-section {
+    background-image: url('/newback.jpg');
+  }
+}
+
+/* Optimize for mobile data saving */
+@media (prefers-reduced-data: reduce) {
+  .fs-section {
+    background-image: none;
+  }
+}
+
+.fs-glow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent);
+  animation: glowMove 18s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Optimize glow animation for performance */
+@keyframes glowMove {
+  0%, 100% { 
+    transform: translateY(0); 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(120px); 
+    opacity: 1;
+  }
+}
+
+/* Performance optimization - use GPU acceleration when available */
+@media (prefers-reduced-motion: no-preference) {
+  .fs-glow {
+    animation: glowMove 18s linear infinite;
+    will-change: transform, opacity;
+  }
+}
+
+.fs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .fs-container {
+    padding: 0 1.5rem;
+  }
+}
+
+.fs-header {
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+.fs-header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.fs-header p {
+  opacity: 0.85;
+  max-width: 720px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.fs-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .fs-grid {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fs-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.2rem;
+  }
+}
+
+.fs-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fallback for browsers that don't support backdrop-filter */
+@supports (backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px)) {
+  .fs-card {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+}
+
+/* For browsers without backdrop-filter support */
+@supports not ((backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px))) {
+  .fs-card {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (min-width: 768px) {
+  .fs-card {
+    padding: 2.2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fs-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.fs-icon {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.fs-card:hover .fs-icon {
+  transform: scale(1.1);
+}
+
+.fs-card h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.3;
+}
+
+.fs-card p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(0.95rem, 1.5vw, 1rem);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.fs-card ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.fs-card li {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.fs-card li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.fs-banner {
+  margin-top: clamp(2rem, 4vw, 4rem);
+  text-align: center;
+  padding: clamp(1.5rem, 3vw, 2.8rem);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  position: relative;
+  overflow: hidden;
+}
+
+.fs-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.fs-banner:hover::before {
+  left: 100%;
+}
+
+.fs-banner h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.fs-banner p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: revealUp 0.8s ease forwards;
+}
+
+/* Stagger animations for cards */
+.fs-card:nth-child(1) { animation-delay: 0.1s; }
+.fs-card:nth-child(2) { animation-delay: 0.2s; }
+.fs-card:nth-child(3) { animation-delay: 0.3s; }
+.fs-card:nth-child(4) { animation-delay: 0.4s; }
+.fs-card:nth-child(5) { animation-delay: 0.5s; }
+.fs-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes revealUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ACCESSIBILITY & PERFORMANCE */
+@media (prefers-reduced-motion: reduce) {
+  .fs-card,
+  .reveal,
+  .fs-glow,
+  .fs-banner::before,
+  .fs-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Focus states for accessibility */
+.fs-card:focus-within {
+  outline: 2px solid rgba(59, 130, 246, 0.8);
+  outline-offset: 2px;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .fs-card {
+    min-height: 200px;
+  }
+  
+  .fs-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+  
+  .fs-banner::before {
+    display: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .fs-card {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .fs-banner {
+    border: 2px solid white;
+  }
+  
+  .fs-card li:before {
+    color: #60a5fa;
+  }
+}
+
+/* Print styles */
+@media print {
+  .fs-section {
+    background: white !important;
+    color: black !important;
+    min-height: auto;
+    padding: 2rem 0;
+  }
+  
+  .fs-section::before,
+  .fs-glow,
+  .fs-banner::before {
+    display: none !important;
+  }
+  
+  .fs-card {
+    background: #f9f9f9 !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+  }
+  
+  .fs-card h3,
+  .fs-card p,
+  .fs-card li,
+  .fs-header p,
+  .fs-banner p {
+    color: black !important;
+  }
+  
+  .fs-banner {
+    background: #e5e5e5 !important;
+    color: black !important;
+    border: 1px solid #ccc;
+  }
+  
+  .fs-icon {
+    color: #333 !important;
+  }
+}
+
+/* Dark mode adjustments (if system prefers) */
+@media (prefers-color-scheme: dark) {
+  .fs-section {
+    background-blend-mode: overlay;
+  }
+}
+
+/* Loading state for background image */
+.fs-section.loading {
+  background: linear-gradient(90deg, #05060a 25%, #0a0c15 50%, #05060a 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
