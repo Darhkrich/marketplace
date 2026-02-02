@@ -1,15 +1,38 @@
 // src/app/(public)/Checkout/success/page.jsx
 'use client';
 
-import { useEffect } from 'react';
+
 import { useRouter, useSearchParams } from 'next/navigation';
+
+
+import { useEffect } from 'react';
+import { Suspense } from 'react';
+
 import Link from 'next/link';
 import '@/styles/checkout.css'; // Import CSS
 
-export default function SuccessPage() {
-  const router = useRouter();
+// Create a separate component for the search params logic
+function SuccessContent() {
   const searchParams = useSearchParams();
   const quoteId = searchParams.get('quote');
+
+  return (
+    <>
+      {quoteId && (
+        <div className="quote-reference">
+          <div className="quote-reference-label">Your Quote Reference</div>
+          <div className="quote-reference-value">{quoteId}</div>
+          <p className="text-sm text-gray-400 mt-2">
+            Please save this reference for future communication.
+          </p>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function SuccessPage() {
+  const router = useRouter();
 
   // Clear cart on success
   useEffect(() => {
@@ -36,15 +59,14 @@ export default function SuccessPage() {
               Your quote request has been received. Our team will review your requirements and contact you within 24 hours.
             </p>
             
-            {quoteId && (
+            {/* Wrap the search params component in Suspense */}
+            <Suspense fallback={
               <div className="quote-reference">
-                <div className="quote-reference-label">Your Quote Reference</div>
-                <div className="quote-reference-value">{quoteId}</div>
-                <p className="text-sm text-gray-400 mt-2">
-                  Please save this reference for future communication.
-                </p>
+                <div className="quote-reference-label">Loading quote reference...</div>
               </div>
-            )}
+            }>
+              <SuccessContent />
+            </Suspense>
             
             <div className="success-steps">
               <div className="success-step">

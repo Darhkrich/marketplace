@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { addTemplateToDashboard } from "@/lib/dashboardStore";
-import { templatesData } from "../../../../../data/templates";
+import { templatesData } from "@/data/templates";
 import AddToQuoteButton from '@/components/common/AddToQuoteButton';
 import "./service.css";
 

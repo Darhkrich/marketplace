@@ -2,14 +2,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import './reset-password.css';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const [token, setToken] = useState(null);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -34,23 +33,30 @@ export default function ResetPasswordPage() {
 
   // Check token validity on component mount
   useEffect(() => {
-    const checkToken = async () => {
-      if (!token) {
-        setTokenValid(false);
-        return;
-      }
+    // Get token from URL
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tokenFromUrl = params.get('token');
+      setToken(tokenFromUrl);
+      
+      const checkToken = async () => {
+        if (!tokenFromUrl) {
+          setTokenValid(false);
+          return;
+        }
 
-      try {
-        // Simulate token validation (will be replaced with Django API)
-        const isValid = await validateResetToken(token);
-        setTokenValid(isValid);
-      } catch (error) {
-        setTokenValid(false);
-      }
-    };
+        try {
+          // Simulate token validation (will be replaced with Django API)
+          const isValid = await validateResetToken(tokenFromUrl);
+          setTokenValid(isValid);
+        } catch (error) {
+          setTokenValid(false);
+        }
+      };
 
-    checkToken();
-  }, [token]);
+      checkToken();
+    }
+  }, []);
 
   // Calculate password strength
   useEffect(() => {

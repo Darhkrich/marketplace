@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { templates } from "@/data/templates";
+import { templatesData } from "@/data/templates";
 import styles from "./template.module.css";
 
 export default async function TemplateDetailPage({ params }) {
   const { slug } = await params; // ✅ REQUIRED in Next 15+
 
-  const template = templates[slug];
+  const template = templatesData[slug];
 
   if (!template) {
     return (
