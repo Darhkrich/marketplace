@@ -5,6 +5,13 @@ import Navbar from '@/components/common/Navbar';
 import MobileMenu from '@/components/common/MobileMenu';
 import Footer from '@/components/common/Footer';
 
+// This should be at the top level of your layout.js
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1, // Optional: prevents auto-zoom on input focus in iOS
+}
+
 
 
 export default function PublicLayout({ children }) {

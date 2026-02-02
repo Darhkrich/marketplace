@@ -1,15 +1,19 @@
+'use client';
 import Link from "next/link";
 import "./services.css";
-import AOSInit from "@/components/common/AOSInit";
 
-
-export const metadata = {
-  title: "Our Services | BOEM",
-  description:
-    "From ready-made websites to custom apps and AI automation. Explore WebCraft services and choose what fits your business.",
-};
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function ServicesPage() {
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      duration: 800,
+      easing: "ease-out-cubic",
+    });
+  }, []);
   return (
     <main className="wc-services-page">
 
@@ -56,7 +60,7 @@ export default function ServicesPage() {
           <span>AI Automation</span>
         </a>
       </nav>
-      <AOSInit />
+    
 
       {/* ================= READY-MADE WEBSITES ================= */}
       <section id="ready-made" className="wc-service-section" data-aos="fade-up">
@@ -244,7 +248,7 @@ export default function ServicesPage() {
             <div>
               <h3>Web App MVP</h3>
               <p>Launch a minimum viable product to test your idea with real users quickly.</p>
-              <ul classc="wc-service-meta">
+              <ul className="wc-service-meta">
                 <li><i className="fas fa-layer-group"></i> Modern tech stack</li>
                 <li><i className="fas fa-chart-line"></i> Analytics integration</li>
               </ul>

@@ -5,6 +5,16 @@
 */
 
 /* ========== RESET / BASE ========== */
+/* Pre-size icons so the layout doesn't collapse while waiting for fonts */
+i[class^="fa-"], i[class*=" fa-"] {
+  display: inline-block;
+  width: 1.25em; /* Standard icon width */
+  height: 1em;
+  text-align: center;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 
 *,
 *::before,
@@ -13,6 +23,19 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  /* This forces the browser to reserve space for the layout 
+     immediately so it doesn't "jump" after loading. */
+  color-scheme: dark; 
+}
+
+/* Ensure the main container doesn't wait for anything to show up */
+.wc-services-page {
+  display: block !important;
+  opacity: 1 !important;
+}
+
 
 html {
   font-size: 16px;
@@ -46,11 +69,6 @@ button {
   cursor: pointer;
 }
 
-/* A subtle page fade-in */
-body {
-  opacity: 0;
-  animation: wc-page-fade 0.45s ease-out forwards;
-}
 
 @keyframes wc-page-fade {
   from {
@@ -581,11 +599,10 @@ body {
 .wc-demo-window-body {
   padding: 0.75rem;
   min-height: 18.75rem;
-  background-image: url("/desktopnew.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  /* Remove background-image or ensure it exists */
+  background: radial-gradient(circle at top left, #4a90ff, #151728);
 }
+
 
 .wc-demo-window-body--plain {
   background: rgba(7, 8, 16, 0.93);
@@ -1684,4 +1701,61 @@ body.wc-light .wc-demo-bubble--system {
       rgba(10, 10, 20, 0.98)
     );
   }
+}
+
+/* Add this at the end of your CSS */
+@supports not (backdrop-filter: blur(20px)) {
+  .wc-hero-demo-card,
+  .service,
+  .wc-demo-window,
+  .wc-demo-phone {
+    background: rgba(15, 15, 25, 0.95) !important;
+    background: linear-gradient(
+      145deg,
+      rgba(15, 15, 25, 0.95),
+      rgba(25, 26, 40, 0.98)
+    ) !important;
+  }
+}
+
+
+
+
+/* ADD a safer fade-in for the main wrapper only */
+.wc-services-page {
+  animation: wc-page-fade 0.5s ease-in;
+}
+
+@keyframes wc-page-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* REPLACE the "Mobile Critical Fixes" at the bottom with this: */
+@media (max-width: 767px) {
+  /* This ensures that even if AOS fails, your content is visible on mobile */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+  
+  /* Prevent horizontal scroll issues on mobile */
+  .wc-services-page {
+    overflow-x: hidden;
+    width: 100vw;
+  }
+}
+
+
+.wc-services-page {
+  /* Force the layout to be block and visible immediately */
+  display: block !important; 
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  
+  /* Ensure it takes up space before JS hits */
+  min-height: 100vh;
+  width: 100%;
 }
